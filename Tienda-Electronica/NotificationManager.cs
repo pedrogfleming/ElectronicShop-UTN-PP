@@ -1,12 +1,13 @@
-﻿using System.Windows.Forms;
-
+﻿using Syncfusion.Windows.Forms;
+using System;
+using System.Windows.Forms;
 namespace Tienda_Electronica
 {
     public static class NotificationManager
     {
         public static void Show(string msg)
         {
-            MessageBox.Show(msg);
+            MessageBoxAdv.Show(msg);
         }
     }
 }

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Shared.Base" Version="20.2.0.50" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ElectronicShop.Models\ElectronicShop.Models.csproj" />
   </ItemGroup>
 
