@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicShop.View", "Tien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicShop.Models", "ElectronicShop.Models\ElectronicShop.Models.csproj", "{D4D5C353-3234-4B6E-9DC6-42987657F8CA}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ElectronicShop.VB.Models", "ElectronicShop.VB.Models\ElectronicShop.VB.Models.vbproj", "{26930F8A-EC4F-4114-81DE-2CD3437AE581}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ElectronicShop.VB.Models", "ElectronicShop.VB.Models\ElectronicShop.VB.Models.vbproj", "{26930F8A-EC4F-4114-81DE-2CD3437AE581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicShop.Persistence", "ElectronicShop.Persistence\ElectronicShop.Persistence.csproj", "{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{26930F8A-EC4F-4114-81DE-2CD3437AE581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26930F8A-EC4F-4114-81DE-2CD3437AE581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26930F8A-EC4F-4114-81DE-2CD3437AE581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,6 +20,8 @@ namespace Tienda_Electronica
         public UserForm()
         {
             InitializeComponent();
+            txtEmail.Text = "oscar_lopez@gmail.com";
+            txtPassword.Text = "123456";
         }
 
         private void btnUser_Click(object sender, EventArgs e)
@@ -35,7 +37,9 @@ namespace Tienda_Electronica
                 }
                 else
                 {
-
+                    this.Visible = false;
+                    MainForm mainForm = new();
+                    mainForm.Show();
                 }
             }
             else

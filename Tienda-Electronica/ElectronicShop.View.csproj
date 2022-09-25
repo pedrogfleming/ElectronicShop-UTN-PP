@@ -9,11 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Core.WinForms" Version="20.2.0.50" />
+    <PackageReference Include="Syncfusion.Pdf.WinForms" Version="20.2.0.50" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="20.2.0.50" />
     <PackageReference Include="Syncfusion.Shared.Base" Version="20.2.0.50" />
+    <PackageReference Include="Syncfusion.Shared.Windows" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.XlsIO.WinForms" Version="20.2.0.50" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ElectronicShop.Models\ElectronicShop.Models.csproj" />
+    <ProjectReference Include="..\ElectronicShop.Persistence\ElectronicShop.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

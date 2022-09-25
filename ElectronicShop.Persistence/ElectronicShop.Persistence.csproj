@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.BarCode" Version="22.9.0" />
+    <ProjectReference Include="..\ElectronicShop.Models\ElectronicShop.Models.csproj" />
   </ItemGroup>
 
 </Project>
