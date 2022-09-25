@@ -33,6 +33,10 @@ namespace Tienda_Electronica
                 {
                     NotificationManager.Show("User doesn´t exists");
                 }
+                else
+                {
+
+                }
             }
             else
             {
