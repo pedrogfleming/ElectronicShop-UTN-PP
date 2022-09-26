@@ -104,7 +104,7 @@
             this.SfDgvProducts.Location = new System.Drawing.Point(139, 12);
             this.SfDgvProducts.Name = "SfDgvProducts";
             this.SfDgvProducts.PreviewRowHeight = 49;
-            this.SfDgvProducts.Size = new System.Drawing.Size(1152, 760);
+            this.SfDgvProducts.Size = new System.Drawing.Size(1389, 760);
             this.SfDgvProducts.Style.Border3DStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.SfDgvProducts.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.SfDgvProducts.Style.CellStyle.BackColor = System.Drawing.Color.Plum;

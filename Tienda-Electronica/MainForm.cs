@@ -26,8 +26,7 @@ namespace Tienda_Electronica
         public MainForm()
         {
             InitializeComponent();
-            _productRepository = new();
-            SfDgvProducts.AddNewRowPosition = RowPosition.Bottom;
+            _productRepository = new();            
         }
 
         public MainForm(ERoles role) : this()
@@ -48,6 +47,7 @@ namespace Tienda_Electronica
                 SfDgvProducts.AllowDeleting = true;
                 SfDgvProducts.AllowEditing = true;
                 SfDgvProducts.LiveDataUpdateMode = LiveDataUpdateMode.AllowSummaryUpdate;
+                SfDgvProducts.AddNewRowPosition = RowPosition.Bottom;
             }
         }
         /// <summary>
@@ -117,6 +117,7 @@ namespace Tienda_Electronica
             addingRow = true;
         }
         /// <summary>
+        /// CREATE
         /// Checks if the product added has the required cells with text.
         /// If so, creates the new product and assignes an Id
         /// </summary>
@@ -140,9 +141,12 @@ namespace Tienda_Electronica
                 {
                     e.IsValid = true;
                     data.Id = Guid.NewGuid();
-                    addingRow = false;
+                    
+                    _productRepository.Add(data);
+                    FillDgv(_productRepository.Get());
                 }
             }
+            addingRow = false;
         }
     }
 }
