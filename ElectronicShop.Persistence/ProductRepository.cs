@@ -100,17 +100,17 @@ namespace ElectronicShop.Persistence
         /// </summary>
         /// <param name="p">The product to add</param>
         /// <returns>True if success, false and the error details if not</returns>
-        public (bool Response,List<string> Errors) Add(Product p)
+        public RepositoryResult Add(Product p)
         {
             var existingProduct = Products.FirstOrDefault(existingProduct => p == existingProduct);
             if(existingProduct is null)
             {
                 Products.Add(p);
-                return (Response : true, Errors: null);
+                return new RepositoryResult(true,null);
             }
             else
             {
-                return (Response: false, Errors: new List<string>() { "Product exist" });
+                return new RepositoryResult(false,new List<string>() { "Product exist" });
             }
         }
         /// <summary>
@@ -118,17 +118,17 @@ namespace ElectronicShop.Persistence
         /// </summary>
         /// <param name="IdProduct"></param>
         /// <returns>True if success, false and the error details if not</returns>
-        public (bool Response, List<string> Errors) Remove(Guid IdProduct)
+        public RepositoryResult Remove(Guid IdProduct)
         {
             var existingProduct = Products.FirstOrDefault(p => p.Id.Value == IdProduct);
             if (existingProduct is not null)
             {
                 Products.Remove(existingProduct);
-                return (Response: true, Errors: null);
+                return new RepositoryResult(true,null);
             }
             else
             {
-                return (Response: false, Errors: new List<string>() { "Product doesn´t exist" });
+                return new RepositoryResult(false,new List<string>() { "Product doesn´t exist" });
             }
         }
         /// <summary>
@@ -136,18 +136,18 @@ namespace ElectronicShop.Persistence
         /// </summary>
         /// <param name="IdProduct"></param>
         /// <returns>True if success, false and the error details if not</returns>
-        public (bool Response, List<string> Errors) Update(Product p)
+        public RepositoryResult Update(Product p)
         {
             var existingProduct = Products.FirstOrDefault(product => product == p);
             if (existingProduct is not null)
             {
                 Products.Remove(existingProduct);
                 Products.Add(p);
-                return (Response: true, Errors: null);
+                return new RepositoryResult(true,null);
             }
             else
             {
-                return (Response: false, Errors: new List<string>() { "Product doesn´t exist" });
+                return new RepositoryResult(false,new List<string>() { "Product doesn´t exist" });
             }
         }
     }

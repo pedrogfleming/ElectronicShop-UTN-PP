@@ -38,7 +38,7 @@ namespace Tienda_Electronica
                 else
                 {
                     this.Visible = false;
-                    MainForm mainForm = new();
+                    MainForm mainForm = new(_role);
                     mainForm.Show();
                 }
             }

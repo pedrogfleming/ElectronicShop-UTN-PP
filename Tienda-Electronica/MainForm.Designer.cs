@@ -32,7 +32,6 @@
             this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addProductsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sellProductsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,8 +57,7 @@
             // 
             this.inventoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewToolStripMenuItem,
-            this.categoriesToolStripMenuItem,
-            this.addProductsToolStripMenuItem});
+            this.categoriesToolStripMenuItem});
             this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
             this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(111, 34);
             this.inventoryToolStripMenuItem.Text = "Inventory";
@@ -67,21 +65,15 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(256, 40);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(229, 40);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // categoriesToolStripMenuItem
             // 
             this.categoriesToolStripMenuItem.Name = "categoriesToolStripMenuItem";
-            this.categoriesToolStripMenuItem.Size = new System.Drawing.Size(256, 40);
+            this.categoriesToolStripMenuItem.Size = new System.Drawing.Size(229, 40);
             this.categoriesToolStripMenuItem.Text = "Categories";
-            // 
-            // addProductsToolStripMenuItem
-            // 
-            this.addProductsToolStripMenuItem.Name = "addProductsToolStripMenuItem";
-            this.addProductsToolStripMenuItem.Size = new System.Drawing.Size(256, 40);
-            this.addProductsToolStripMenuItem.Text = "Add products";
             // 
             // sellToolStripMenuItem
             // 
@@ -108,10 +100,10 @@
             // 
             this.SfDgvProducts.AccessibleName = "Table";
             this.SfDgvProducts.AllowResizingColumns = true;
+            this.SfDgvProducts.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.Fill;
             this.SfDgvProducts.Location = new System.Drawing.Point(139, 12);
             this.SfDgvProducts.Name = "SfDgvProducts";
             this.SfDgvProducts.PreviewRowHeight = 49;
-            this.SfDgvProducts.SelectionMode = Syncfusion.WinForms.DataGrid.Enums.GridSelectionMode.Multiple;
             this.SfDgvProducts.Size = new System.Drawing.Size(1152, 760);
             this.SfDgvProducts.Style.Border3DStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.SfDgvProducts.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
@@ -123,13 +115,15 @@
             this.SfDgvProducts.TabIndex = 1;
             this.SfDgvProducts.Text = "sfDataGrid1";
             this.SfDgvProducts.CurrentCellEndEdit += new Syncfusion.WinForms.DataGrid.Events.CurrentCellEndEditEventHandler(this.SfDgvProducts_CurrentCellEndEdit);
+            this.SfDgvProducts.RowValidating += new Syncfusion.WinForms.DataGrid.Events.RowValidatingEventHandler(this.SfDgvProducts_RowValidating);
+            this.SfDgvProducts.AddNewRowInitiating += new Syncfusion.WinForms.DataGrid.Events.AddNewRowInitiatingEventHandler(this.SfDgvProducts_AddNewRowInitiating);
             this.SfDgvProducts.CurrentCellKeyDown += new Syncfusion.WinForms.DataGrid.Events.CurrentCellKeyEventHandler(this.SfDgvProducts_CurrentCellKeyDown);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1325, 784);
+            this.ClientSize = new System.Drawing.Size(1540, 784);
             this.Controls.Add(this.SfDgvProducts);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -150,7 +144,6 @@
         private System.Windows.Forms.ToolStripMenuItem sellToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoriesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addProductsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sellProductsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesHistoryToolStripMenuItem;
         private Syncfusion.WinForms.DataGrid.SfDataGrid SfDgvProducts;
