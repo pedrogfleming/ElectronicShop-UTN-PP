@@ -2,6 +2,7 @@
 using ElectronicShop.Models.Products;
 using ElectronicShop.Persistence;
 using Syncfusion.Data.Extensions;
+using Syncfusion.XlsIO;
 using Syncfusion.XPS;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,17 @@ namespace Tienda_Electronica
 {
     public partial class CartForm : Form
     {
-        public Dictionary<Product,int> _Cart { get; }
-        AccountingRepository _AccountingRepository { get; init; }
+        private Dictionary<Product,int> _Cart { get; init; }
+        private AccountingRepository _AccRepository { get; init; }
         public CartForm()
         {
             InitializeComponent();
         }
 
-        public CartForm(Dictionary<Product, int> cart) : this()
+        public CartForm(Dictionary<Product, int> cart,AccountingRepository accRepo) : this()
         {
+            _AccRepository = accRepo;
             _Cart = cart;
-            _AccountingRepository = new();
             LoadCart();
         }        
         /// <summary>
@@ -109,7 +110,35 @@ namespace Tienda_Electronica
                 LoadCart();
             }
         }
+        /// <summary>
+        /// SELL
+        /// Permforms the sell to the client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void sfBtnSell_Click(object sender, EventArgs e)
+        {
+            var bill = new Bill()
+            {
+                DateOfSale = DateTime.Now,
+                TotalAmount = CalculateTotalCartCost(),
+                Client = new()
+            };
 
+            var cForm = new ClientForm(bill);
+            cForm.Show();
+
+            //We generate the new bill and we clear the cart.
+            //In the client form, we get the info of the client 
+            //And that info will be automatic stored in the bill client prop
+            _AccRepository.Add(bill);
+            _Cart.Clear();
+            Close();
+        }
+        /// <summary>
+        /// Calculates the total cost per item in the cart
+        /// </summary>
+        /// <returns>The total cost of the cart</returns>
         private decimal CalculateTotalCartCost()
         {
             return _Cart.Sum(i =>
@@ -117,6 +146,9 @@ namespace Tienda_Electronica
                 return i.Key.Price * i.Value;
             });
         }
+
+        #region Preventing User UI problems
+
         /// <summary>
         /// Prevents the user to use the context menu right click if there isen´t selected any item of the cart listview
         /// </summary>
@@ -155,17 +187,8 @@ namespace Tienda_Electronica
             {
                 nudQuantityItems.Value = selectedItem.Quantity;
                 albQuantity.Visible = nudQuantityItems.Visible;
-            }
+            }            
         }
-
-        private void sfBtnSell_Click(object sender, EventArgs e)
-        {
-            var bill = new Bill()
-            {
-                DateOfSale = DateTime.Now,
-                TotalAmount = CalculateTotalCartCost(),
-            };
-            _AccountingRepository.Add(bill)
-        }
+        #endregion
     }
 }

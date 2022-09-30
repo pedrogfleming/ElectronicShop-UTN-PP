@@ -1,4 +1,5 @@
-﻿using ElectronicShop.Models.Products;
+﻿using ElectronicShop.Models.Accounting;
+using ElectronicShop.Models.Products;
 using ElectronicShop.Models.Users;
 using ElectronicShop.Persistence;
 using Syncfusion.Data;
@@ -20,6 +21,7 @@ namespace Tienda_Electronica
 {
     public partial class MainForm : SfForm
     {
+        private static AccountingRepository _accountingRepository;
         ProductRepository _productRepository { get; init; }
         Dictionary<Product,int> _Cart { get; init; }
         bool addingRow = false;
@@ -30,6 +32,10 @@ namespace Tienda_Electronica
             InitializeComponent();
             _productRepository = new();
             _Cart = new();
+            if(_accountingRepository is null)
+            {
+                _accountingRepository = new();
+            }
         }
 
         public MainForm(ERoles role) : this()
@@ -38,7 +44,6 @@ namespace Tienda_Electronica
             SetPermissions(Role);
             this.Text += $" - User {role}";
             SfDgvProducts.ContextMenuStrip = new();
-            SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);
         }
         private void SetPermissions(ERoles r)
         {
@@ -56,15 +61,25 @@ namespace Tienda_Electronica
             }
         }
         /// <summary>
-        /// Fill with data the dgv
+        /// Fill with products the dgv
         /// </summary>
         /// <param name="products"></param>
-        private void FillDgv(List<Product> products)
+        private void FillDgvProducts(List<Product> products)
         {
             SfDgvProducts.DataSource = null;
             SfDgvProducts.DataSource = products;
+            SfDgvProducts.ContextMenuStrip.Items.Clear();
+            SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);
+            SfDgvProducts.AddNewRowPosition = RowPosition.Bottom;
         }
-        
+        private void FillDgvSales(List<Bill> sales)
+        {
+            SfDgvProducts.DataSource = null;
+            SfDgvProducts.DataSource = sales;
+            SfDgvProducts.ContextMenuStrip.Items.Clear();
+            SfDgvProducts.AddNewRowPosition = RowPosition.None;
+        }
+
         /// <summary>
         /// Adds a Product to the cart if not exist already.
         /// If exists, sum one more of the same product to the cart
@@ -95,7 +110,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void viewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FillDgv(_productRepository.Get());
+            FillDgvProducts(_productRepository.Get());
         }
 
         /// <summary>
@@ -112,7 +127,7 @@ namespace Tienda_Electronica
                 if (editedProduct is not null && Role == ERoles.Owner)
                 {
                     _productRepository.Update(editedProduct);
-                    FillDgv(_productRepository.Get());
+                    FillDgvProducts(_productRepository.Get());
                 }
             }
         }
@@ -131,18 +146,9 @@ namespace Tienda_Electronica
                 {
                     //We need to count the row index starting from zero to avoid the headers
                     _productRepository.Remove(products[e.RowIndex - 1].Id.Value);
-                    FillDgv(_productRepository.Get());
+                    FillDgvProducts(_productRepository.Get());
                 }
             }
-        }
-        /// <summary>
-        /// Changes to true the addingRow so the updated repository action not procede
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SfDgvProducts_AddNewRowInitiating(object sender, Syncfusion.WinForms.DataGrid.Events.AddNewRowInitiatingEventArgs e)
-        {
-            addingRow = true;
         }
         /// <summary>
         /// CREATE
@@ -172,19 +178,33 @@ namespace Tienda_Electronica
                     data.Id = Guid.NewGuid();
                     
                     _productRepository.Add(data);
-                    FillDgv(_productRepository.Get());
+                    FillDgvProducts(_productRepository.Get());
                 }
             }
             addingRow = false;
         }
-
+        /// <summary>
+        /// Changes to true the addingRow so the updated repository action not procede
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SfDgvProducts_AddNewRowInitiating(object sender, Syncfusion.WinForms.DataGrid.Events.AddNewRowInitiatingEventArgs e)
+        {
+            addingRow = true;
+        }
         private void sellProductsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(_Cart.Count > 0)
             {
-                var cartForm = new CartForm(_Cart);
+                var cartForm = new CartForm(_Cart,_accountingRepository);
                 cartForm.ShowDialog();
             }
+        }
+
+        private void salesHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FillDgvSales(_accountingRepository.Get());
+
         }
     }
 }

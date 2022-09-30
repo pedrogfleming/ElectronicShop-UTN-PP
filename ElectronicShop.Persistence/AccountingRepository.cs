@@ -2,6 +2,7 @@
 using ElectronicShop.Models.Products;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,15 @@ namespace ElectronicShop.Persistence
     {
         private decimal _TotalAmount { get; set; } = 0;
 
-        private List<Bill> Bills { get; set; }
+        /// <summary>
+        /// All the bills of the shop. We use a HashSet so we only keep it unique objects
+        /// </summary>
+        private HashSet<Bill> Bills { get; set; }
+
+        public AccountingRepository()
+        {
+            Bills = new();
+        }
 
         /// <summary>
         /// Add a new bill to the accounting
@@ -21,15 +30,16 @@ namespace ElectronicShop.Persistence
         /// <returns>True if success, false and the error details if not</returns>
         public RepositoryResult Add(Bill b)
         {
-            var existingBill = Bills.FirstOrDefault(existingBill => b == existingBill);
-            if (existingBill is null)
+            b.Id = Guid.NewGuid();
+            bool added = Bills.Add(b);
+            if (!added)
             {
-                Bills.Add(b);
-                return new RepositoryResult(true, null);
+                return new RepositoryResult(false, new List<string>() { "Bill already exists" });
             }
             else
             {
-                return new RepositoryResult(false, new List<string>() { "Bill already exists" });
+
+                return new RepositoryResult(true, null);
             }
         }
         /// <summary>
@@ -37,12 +47,11 @@ namespace ElectronicShop.Persistence
         /// </summary>
         /// <param name="BillId">The bill id to find and remove</param>
         /// <returns>True if success, false and the error details if not</returns>
-        public RepositoryResult Remove(Guid BillId)
+        public RepositoryResult Remove(Guid billId)
         {
-            var existingBill = Bills.FirstOrDefault(b => b.Id == BillId);
-            if (existingBill is not null)
+            int removed = Bills.RemoveWhere(b => b.Id == billId);
+            if (removed > 0)
             {
-                Bills.Remove(existingBill);
                 return new RepositoryResult(true, null);
             }
             else
@@ -67,6 +76,25 @@ namespace ElectronicShop.Persistence
             else
             {
                 return new RepositoryResult(false, new List<string>() { "Bill doesn´t exists" });
+            }
+        }
+        /// <summary>
+        /// Get by id or all the bills
+        /// </summary>
+        /// <param name="id">Thde optional id search parameter</param>
+        /// <returns>The list with all or the demanded bill</returns>
+        public List<Bill> Get(Guid? id = null)
+        {
+            if(id is null)
+            {
+                return new List<Bill>(Bills);
+            }
+            else
+            {
+                Bill existingBill = Bills.FirstOrDefault(bill => bill.Id == id);
+                List<Bill> bills = new();
+                if(existingBill is not null) bills.Add(existingBill);                
+                return bills;
             }
         }
     }

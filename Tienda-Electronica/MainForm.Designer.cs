@@ -50,7 +50,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(2, 2);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(185, 683);
+            this.menuStrip1.Size = new System.Drawing.Size(185, 717);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -97,6 +97,7 @@
             this.salesHistoryToolStripMenuItem.Name = "salesHistoryToolStripMenuItem";
             this.salesHistoryToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.salesHistoryToolStripMenuItem.Text = "Sales history";
+            this.salesHistoryToolStripMenuItem.Click += new System.EventHandler(this.salesHistoryToolStripMenuItem_Click);
             // 
             // SfDgvProducts
             // 
@@ -104,7 +105,7 @@
             this.SfDgvProducts.AllowResizingColumns = true;
             this.SfDgvProducts.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.Fill;
             this.SfDgvProducts.Location = new System.Drawing.Point(116, 10);
-            this.SfDgvProducts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SfDgvProducts.Margin = new System.Windows.Forms.Padding(2);
             this.SfDgvProducts.Name = "SfDgvProducts";
             this.SfDgvProducts.PreviewRowHeight = 49;
             this.SfDgvProducts.Size = new System.Drawing.Size(1158, 634);
@@ -126,11 +127,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1295, 687);
+            this.ClientSize = new System.Drawing.Size(1307, 721);
             this.Controls.Add(this.SfDgvProducts);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
