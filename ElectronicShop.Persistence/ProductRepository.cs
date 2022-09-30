@@ -110,7 +110,7 @@ namespace ElectronicShop.Persistence
             }
             else
             {
-                return new RepositoryResult(false,new List<string>() { "Product exist" });
+                return new RepositoryResult(false,new List<string>() { "Product already exists" });
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace ElectronicShop.Persistence
             }
             else
             {
-                return new RepositoryResult(false,new List<string>() { "Product doesn´t exist" });
+                return new RepositoryResult(false,new List<string>() { "Product doesn´t exists" });
             }
         }
         /// <summary>

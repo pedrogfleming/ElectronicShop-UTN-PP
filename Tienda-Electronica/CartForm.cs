@@ -1,4 +1,6 @@
-﻿using ElectronicShop.Models.Products;
+﻿using ElectronicShop.Models.Accounting;
+using ElectronicShop.Models.Products;
+using ElectronicShop.Persistence;
 using Syncfusion.Data.Extensions;
 using Syncfusion.XPS;
 using System;
@@ -17,7 +19,8 @@ namespace Tienda_Electronica
 {
     public partial class CartForm : Form
     {
-        public Dictionary<Product,int> Cart { get; }
+        public Dictionary<Product,int> _Cart { get; }
+        AccountingRepository _AccountingRepository { get; init; }
         public CartForm()
         {
             InitializeComponent();
@@ -25,7 +28,8 @@ namespace Tienda_Electronica
 
         public CartForm(Dictionary<Product, int> cart) : this()
         {
-            Cart = cart;
+            _Cart = cart;
+            _AccountingRepository = new();
             LoadCart();
         }        
         /// <summary>
@@ -34,7 +38,8 @@ namespace Tienda_Electronica
         private void LoadCart()
         {
             sfLvwCart.DataSource = null;
-            sfLvwCart.DataSource = Cart.Select(p =>
+            CleanItemWithZeroQty();
+            sfLvwCart.DataSource = _Cart.Select(p =>
                 new ItemCart(
                     p.Key.Id.Value,
                     p.Key.Name,
@@ -42,6 +47,20 @@ namespace Tienda_Electronica
                     p.Value)).ToList();
             sfLvwCart.DisplayMember = "DisplayInfo";
             SetListBoxClickOptions();
+        }
+        /// <summary>
+        /// Removes from the cart those item with zero or less quantity
+        /// </summary>
+        private void CleanItemWithZeroQty()
+        {
+            for (int i = 0; i < _Cart.Count; i++)
+            {
+                var item = _Cart.Keys.ElementAt(i);
+                if (_Cart[item] <= 0)
+                {
+                    _Cart.Remove(item);
+                }
+            }
         }
 
         /// <summary>
@@ -52,14 +71,32 @@ namespace Tienda_Electronica
         {
             sfLvwCart.ContextMenuStrip = new();
             sfLvwCart.ContextMenuStrip.Items.Clear();
-            if (Cart.Count != 0)
+            if (_Cart.Count != 0)
             {
                 sfLvwCart.ContextMenuStrip.Items.Add("Remove", null, RemoveFromCart);
             }
         }
+
+        /// <summary>
+        /// UPDATE quantity
+        /// Assignment of the quantity of the select item in the cart to the nud value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nudQuantityItems_ValueChanged(object sender, EventArgs e)
+        {
+            var selectedItem = sfLvwCart.SelectedItem as ItemCart;
+            if (selectedItem is not null)
+            {
+                var item = _Cart.FirstOrDefault(i => selectedItem == i.Key);
+                _Cart[item.Key] = (int)nudQuantityItems.Value;
+                LoadCart();
+            }
+        }
+
         /// <summary>
         /// DELETE
-        /// Removes the selected item from the cart listview
+        /// Remove the selected item from the cart listview
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -68,9 +105,17 @@ namespace Tienda_Electronica
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if(selectedItem is not null)
             {
-                Cart.Remove(Cart.Keys.SingleOrDefault(i => selectedItem == i));
+                _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i));
                 LoadCart();
             }
+        }
+
+        private decimal CalculateTotalCartCost()
+        {
+            return _Cart.Sum(i =>
+            {
+                return i.Key.Price * i.Value;
+            });
         }
         /// <summary>
         /// Prevents the user to use the context menu right click if there isen´t selected any item of the cart listview
@@ -85,7 +130,11 @@ namespace Tienda_Electronica
             }
             nudQuantityItems.Visible = true;
         }
-
+        /// <summary>
+        /// When the user changes the selected item of the listview, it will show the quantity of the item in the nud
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sfLvwCart_SelectionChanged(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs e)
         {
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
@@ -94,14 +143,29 @@ namespace Tienda_Electronica
                 nudQuantityItems.Value = selectedItem.Quantity;
             }
         }
-
+        /// <summary>
+        /// To initialize the value of the nud
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nudQuantityItems_VisibleChanged(object sender, EventArgs e)
         {
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if (selectedItem is not null)
             {
                 nudQuantityItems.Value = selectedItem.Quantity;
+                albQuantity.Visible = nudQuantityItems.Visible;
             }
+        }
+
+        private void sfBtnSell_Click(object sender, EventArgs e)
+        {
+            var bill = new Bill()
+            {
+                DateOfSale = DateTime.Now,
+                TotalAmount = CalculateTotalCartCost(),
+            };
+            _AccountingRepository.Add(bill)
         }
     }
 }
