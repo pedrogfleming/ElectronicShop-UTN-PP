@@ -2,6 +2,7 @@
 using ElectronicShop.Models.Users;
 using ElectronicShop.Persistence;
 using Syncfusion.Data;
+using Syncfusion.WinForms.Controls;
 using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Enums;
 using System;
@@ -17,16 +18,18 @@ using System.Windows.Forms;
 
 namespace Tienda_Electronica
 {
-    public partial class MainForm : Form
+    public partial class MainForm : SfForm
     {
         ProductRepository _productRepository { get; init; }
+        Dictionary<Product,int> _Cart { get; init; }
         bool addingRow = false;
         public ERoles Role { get; }
 
         public MainForm()
         {
             InitializeComponent();
-            _productRepository = new();            
+            _productRepository = new();
+            _Cart = new();
         }
 
         public MainForm(ERoles role) : this()
@@ -34,6 +37,8 @@ namespace Tienda_Electronica
             Role = role;
             SetPermissions(Role);
             this.Text += $" - User {role}";
+            SfDgvProducts.ContextMenuStrip = new();
+            SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);
         }
         private void SetPermissions(ERoles r)
         {
@@ -59,6 +64,29 @@ namespace Tienda_Electronica
             SfDgvProducts.DataSource = null;
             SfDgvProducts.DataSource = products;
         }
+        
+        /// <summary>
+        /// Adds a Product to the cart if not exist already.
+        /// If exists, sum one more of the same product to the cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddToCart(object sender, EventArgs e)
+        {
+            Product selectedProduct = SfDgvProducts.SelectedItem as Product;
+            if(selectedProduct is not null)
+            {
+                if (_Cart.ContainsKey(selectedProduct))
+                {
+                    _Cart[selectedProduct]++;
+                }
+                else
+                {
+                    _Cart.Add(selectedProduct, 1);
+                }
+            }
+        }
+        
         /// <summary>
         /// GET ALL
         /// Activate when the user select in menu Inventory>View
@@ -125,6 +153,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void SfDgvProducts_RowValidating(object sender, Syncfusion.WinForms.DataGrid.Events.RowValidatingEventArgs e)
         {
+            addingRow = true;
             if (SfDgvProducts.AddNewRowPosition == RowPosition.Bottom)
             {
                 var data = e.DataRow.RowData as Product;
@@ -147,6 +176,15 @@ namespace Tienda_Electronica
                 }
             }
             addingRow = false;
+        }
+
+        private void sellProductsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(_Cart.Count > 0)
+            {
+                var cartForm = new CartForm(_Cart);
+                cartForm.ShowDialog();
+            }
         }
     }
 }

@@ -47,9 +47,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.inventoryToolStripMenuItem,
             this.sellToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(2, 2);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(124, 784);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(185, 683);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -59,20 +60,20 @@
             this.viewToolStripMenuItem,
             this.categoriesToolStripMenuItem});
             this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
-            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(111, 34);
+            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(174, 29);
             this.inventoryToolStripMenuItem.Text = "Inventory";
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(229, 40);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // categoriesToolStripMenuItem
             // 
             this.categoriesToolStripMenuItem.Name = "categoriesToolStripMenuItem";
-            this.categoriesToolStripMenuItem.Size = new System.Drawing.Size(229, 40);
+            this.categoriesToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.categoriesToolStripMenuItem.Text = "Categories";
             // 
             // sellToolStripMenuItem
@@ -81,19 +82,20 @@
             this.sellProductsToolStripMenuItem,
             this.salesHistoryToolStripMenuItem});
             this.sellToolStripMenuItem.Name = "sellToolStripMenuItem";
-            this.sellToolStripMenuItem.Size = new System.Drawing.Size(111, 34);
+            this.sellToolStripMenuItem.Size = new System.Drawing.Size(174, 29);
             this.sellToolStripMenuItem.Text = "Sell";
             // 
             // sellProductsToolStripMenuItem
             // 
             this.sellProductsToolStripMenuItem.Name = "sellProductsToolStripMenuItem";
-            this.sellProductsToolStripMenuItem.Size = new System.Drawing.Size(250, 40);
+            this.sellProductsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.sellProductsToolStripMenuItem.Text = "Sell products";
+            this.sellProductsToolStripMenuItem.Click += new System.EventHandler(this.sellProductsToolStripMenuItem_Click);
             // 
             // salesHistoryToolStripMenuItem
             // 
             this.salesHistoryToolStripMenuItem.Name = "salesHistoryToolStripMenuItem";
-            this.salesHistoryToolStripMenuItem.Size = new System.Drawing.Size(250, 40);
+            this.salesHistoryToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.salesHistoryToolStripMenuItem.Text = "Sales history";
             // 
             // SfDgvProducts
@@ -101,10 +103,11 @@
             this.SfDgvProducts.AccessibleName = "Table";
             this.SfDgvProducts.AllowResizingColumns = true;
             this.SfDgvProducts.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.Fill;
-            this.SfDgvProducts.Location = new System.Drawing.Point(139, 12);
+            this.SfDgvProducts.Location = new System.Drawing.Point(116, 10);
+            this.SfDgvProducts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.SfDgvProducts.Name = "SfDgvProducts";
             this.SfDgvProducts.PreviewRowHeight = 49;
-            this.SfDgvProducts.Size = new System.Drawing.Size(1389, 760);
+            this.SfDgvProducts.Size = new System.Drawing.Size(1158, 634);
             this.SfDgvProducts.Style.Border3DStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.SfDgvProducts.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.SfDgvProducts.Style.CellStyle.BackColor = System.Drawing.Color.Plum;
@@ -121,13 +124,16 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1540, 784);
+            this.ClientSize = new System.Drawing.Size(1295, 687);
             this.Controls.Add(this.SfDgvProducts);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
+            this.Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             this.Text = "MainForm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
