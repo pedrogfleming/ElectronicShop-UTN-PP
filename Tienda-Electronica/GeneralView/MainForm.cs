@@ -4,27 +4,23 @@ using ElectronicShop.Models.Users;
 using ElectronicShop.Persistence;
 using Syncfusion.Data;
 using Syncfusion.WinForms.Controls;
-using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tienda_Electronica.GeneralView;
 
 namespace Tienda_Electronica
 {
     public partial class MainForm : SfForm
     {
+        public enum EDgvView { Empty = 0, Products = 1, Sales = 2 }
+        private EDgvView _View { get; set; }
         private static AccountingRepository _accountingRepository;
         ProductRepository _productRepository { get; init; }
-        Dictionary<Product,int> _Cart { get; init; }
+        Dictionary<Product, int> _Cart { get; init; }
         bool addingRow = false;
+
         public ERoles Role { get; }
 
         public MainForm()
@@ -32,7 +28,7 @@ namespace Tienda_Electronica
             InitializeComponent();
             _productRepository = new();
             _Cart = new();
-            if(_accountingRepository is null)
+            if (_accountingRepository is null)
             {
                 _accountingRepository = new();
             }
@@ -44,6 +40,7 @@ namespace Tienda_Electronica
             SetPermissions(Role);
             this.Text += $" - User {role}";
             SfDgvProducts.ContextMenuStrip = new();
+            _View = EDgvView.Empty;
         }
         private void SetPermissions(ERoles r)
         {
@@ -70,14 +67,29 @@ namespace Tienda_Electronica
             SfDgvProducts.DataSource = products;
             SfDgvProducts.ContextMenuStrip.Items.Clear();
             SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);
-            SfDgvProducts.AddNewRowPosition = RowPosition.Bottom;
+            SetPermissions(Role);
+            _View = EDgvView.Products;
+            SetSaleMenu(_Cart.Count > 0);
         }
         private void FillDgvSales(List<Bill> sales)
         {
             SfDgvProducts.DataSource = null;
-            SfDgvProducts.DataSource = sales;
+            SfDgvProducts.DataSource = BillView.MapSales(sales);
             SfDgvProducts.ContextMenuStrip.Items.Clear();
             SfDgvProducts.AddNewRowPosition = RowPosition.None;
+            SfDgvProducts.AllowDeleting = false;
+            SfDgvProducts.AllowEditing = false;
+            _View = EDgvView.Sales;
+        }
+        private void SetSaleMenu(bool access)
+        {
+            foreach (ToolStripItem item in sellProductsToolStripMenuItem.DropDownItems)
+            {
+                if (item.Tag == "Sale")
+                {
+                    item.Enabled = access;
+                }
+            }
         }
 
         /// <summary>
@@ -89,7 +101,7 @@ namespace Tienda_Electronica
         private void AddToCart(object sender, EventArgs e)
         {
             Product selectedProduct = SfDgvProducts.SelectedItem as Product;
-            if(selectedProduct is not null)
+            if (selectedProduct is not null)
             {
                 if (_Cart.ContainsKey(selectedProduct))
                 {
@@ -99,9 +111,10 @@ namespace Tienda_Electronica
                 {
                     _Cart.Add(selectedProduct, 1);
                 }
+                SetSaleMenu(true);
             }
         }
-        
+
         /// <summary>
         /// GET ALL
         /// Activate when the user select in menu Inventory>View
@@ -121,7 +134,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void SfDgvProducts_CurrentCellEndEdit(object sender, Syncfusion.WinForms.DataGrid.Events.CurrentCellEndEditEventArgs e)
         {
-            if (!addingRow)
+            if (!addingRow && _View == EDgvView.Products)
             {
                 var editedProduct = e.DataRow.RowData as Product;
                 if (editedProduct is not null && Role == ERoles.Owner)
@@ -139,7 +152,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void SfDgvProducts_CurrentCellKeyDown(object sender, Syncfusion.WinForms.DataGrid.Events.CurrentCellKeyEventArgs e)
         {
-            if (e.KeyEventArgs.KeyCode == Keys.Delete && Role == ERoles.Owner)
+            if (e.KeyEventArgs.KeyCode == Keys.Delete && Role == ERoles.Owner && _View == EDgvView.Products)
             {
                 var products = SfDgvProducts.DataSource as List<Product>;
                 if (products is not null)
@@ -159,9 +172,10 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void SfDgvProducts_RowValidating(object sender, Syncfusion.WinForms.DataGrid.Events.RowValidatingEventArgs e)
         {
-            addingRow = true;
-            if (SfDgvProducts.AddNewRowPosition == RowPosition.Bottom)
+
+            if (SfDgvProducts.AddNewRowPosition == RowPosition.Bottom && _View == EDgvView.Products)
             {
+                addingRow = true;
                 var data = e.DataRow.RowData as Product;
 
                 //Loop and check all the columns having the empty values for the added record. 
@@ -176,7 +190,7 @@ namespace Tienda_Electronica
                 {
                     e.IsValid = true;
                     data.Id = Guid.NewGuid();
-                    
+
                     _productRepository.Add(data);
                     FillDgvProducts(_productRepository.Get());
                 }
@@ -194,17 +208,23 @@ namespace Tienda_Electronica
         }
         private void sellProductsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(_Cart.Count > 0)
+            if (_Cart.Count > 0)
             {
-                var cartForm = new CartForm(_Cart,_accountingRepository);
+                var cartForm = new CartForm(_Cart, _accountingRepository);
                 cartForm.ShowDialog();
             }
         }
 
         private void salesHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FillDgvSales(_accountingRepository.Get());
-
+            if (Role == ERoles.Owner)
+            {
+                FillDgvSales(_accountingRepository.Get());
+            }
+            else
+            {
+                NotificationManager.Show("Permission denied");
+            }
         }
     }
 }

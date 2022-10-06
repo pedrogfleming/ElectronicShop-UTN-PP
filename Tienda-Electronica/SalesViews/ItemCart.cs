@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tienda_Electronica
+namespace Tienda_Electronica.SalesViews
 {
     public class ItemCart
     {

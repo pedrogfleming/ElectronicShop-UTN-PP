@@ -37,8 +37,8 @@ namespace Tienda_Electronica
 
                 StringBuilder sb = new();
                 sb.AppendLine("Sale details:");
-                sb.AppendLine($"Total: ${_Bill.TotalAmount.ToString("#:##")}");
-                sb.AppendLine($"Date of the sale: ${_Bill.DateOfSale}");
+                sb.AppendLine($"Total: ${_Bill.TotalAmount.ToString("#.##")}");
+                sb.AppendLine($"Date of the sale: {_Bill.DateOfSale}");
                 sb.AppendLine($"Client Details:{_Bill.Client.LastName} {_Bill.Client.Name} - CUIL: {_Bill.Client.Cuil}");
                 NotificationManager.Show(sb.ToString());
                 Close();
