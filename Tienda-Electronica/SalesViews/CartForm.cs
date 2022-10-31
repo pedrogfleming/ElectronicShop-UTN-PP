@@ -24,6 +24,7 @@ namespace Tienda_Electronica
     {
         private Dictionary<Product,int> _Cart { get; init; }
         private AccountingRepository _AccRepository { get; init; }
+        private bool UserSelectedItem { get; set; } = false;
         public CartForm()
         {
             InitializeComponent();
@@ -50,6 +51,14 @@ namespace Tienda_Electronica
                     p.Value)).ToList();
             sfLvwCart.DisplayMember = "DisplayInfo";
             SetListBoxClickOptions();
+
+        }
+        /// <summary>
+            else
+            {
+                sfLvwCart.SelectedIndex = _Cart.Keys.IndexOf(sfLvwCart)
+            }
+
         }
         /// <summary>
         /// Removes from the cart those item with zero or less quantity
@@ -91,6 +100,7 @@ namespace Tienda_Electronica
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if (selectedItem is not null)
             {
+                UserSelectedItem = true;
                 var item = _Cart.FirstOrDefault(i => selectedItem == i.Key);
                 _Cart[item.Key] = (int)nudQuantityItems.Value;
                 LoadCart();
