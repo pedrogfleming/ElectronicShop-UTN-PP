@@ -239,9 +239,10 @@ namespace Tienda_Electronica
         {
             if (_Cart.Count > 0)
             {
-                var cartForm = new CartForm(_Cart, _accountingRepository);
-                cartForm.ShowDialog();
+                var cartForm = new CartForm(_Cart, _accountingRepository,_productRepository);
+                DialogResult result = cartForm.ShowDialog();
                 RefreshCartCount();
+                FillDgvProducts(_productRepository.Get());
             }
         }
 

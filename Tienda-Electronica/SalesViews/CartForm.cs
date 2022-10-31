@@ -22,27 +22,25 @@ namespace Tienda_Electronica
 {
     public partial class CartForm : Form
     {
-        private Dictionary<Product,int> _Cart { get; init; }
-        private AccountingRepository _AccRepository { get; init; }
-        private ItemCart _selectedProduct { get; set; }
-        public CartForm()
-        {
-            InitializeComponent();
-        }
+        private Dictionary<Product, int> _Cart { get; init; }
+        private readonly AccountingRepository _accRepository;
+        private readonly ProductRepository _productRepository;
 
-        public CartForm(Dictionary<Product, int> cart,AccountingRepository accRepo) : this()
+        public CartForm(Dictionary<Product, int> cart, AccountingRepository accRepo, ProductRepository productRepository)
         {
-            _AccRepository = accRepo;
+            _accRepository = accRepo;
             _Cart = cart;
+            InitializeComponent();
             LoadCart();
-        }        
+            _productRepository = productRepository;
+        }
         /// <summary>
         /// Refresh the cart listview
         /// </summary>
         private void LoadCart()
         {
             CleanItemWithZeroQty();
-            if(_Cart.Count == 0 )
+            if (_Cart.Count == 0)
             {
                 Close();
             }
@@ -56,22 +54,6 @@ namespace Tienda_Electronica
             sfLvwCart.DisplayMember = "DisplayInfo";
             SetListBoxClickOptions();
             SfCTxtTotalAmount.Text = CalculateTotalCartCost().ToString();
-        }
-        /// <summary>
-        /// When there isn´t a selected item in the lstbox, the first is selected
-        /// </summary>
-        private void SelectItemOrDefault()
-        {
-            if (sfLvwCart.SelectedItem is null && _selectedProduct is null)
-            {
-                sfLvwCart.SelectedIndex = 0;
-            }
-            else
-            {
-                var products = _Cart.Keys.Select(p => new ItemCart(p));
-                var i = products.IndexOf(_selectedProduct);
-                sfLvwCart.SelectedIndex = i;
-            }
         }
         /// <summary>
         /// Removes from the cart those item with zero or less quantity
@@ -103,7 +85,7 @@ namespace Tienda_Electronica
                 sfLvwCart.ContextMenuStrip.Items.Add("Decrement", null, DecrementItem);
             }
         }
-        
+
         /// <summary>
         /// DELETE
         /// Remove the selected item from the cart listview
@@ -113,12 +95,13 @@ namespace Tienda_Electronica
         private void RemoveFromCart(object sender, EventArgs e)
         {
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
-            if(selectedItem is not null)
+            if (selectedItem is not null)
             {
                 _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i));
                 LoadCart();
             }
         }
+
         /// <summary>
         /// Increment the quantity of an item in the cart
         /// </summary>
@@ -129,12 +112,24 @@ namespace Tienda_Electronica
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if (selectedItem is not null)
             {
-                selectedItem.Quantity++;
-                var obj = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
-                _Cart[obj] = selectedItem.Quantity;
-                LoadCart();
+                //Because we are adding more unit of the product, we need to verify that are products of the type in stock
+                Product p = _productRepository.Get(selectedItem.Id).SingleOrDefault();
+                if (p is not null && p.Stock > 0)
+                {
+                    p.Stock--;
+                    _productRepository.Update(p);
+                    selectedItem.Quantity++;
+                    var obj = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
+                    _Cart[obj] = selectedItem.Quantity;
+                    LoadCart();
+                }
+                else
+                {
+                    NotificationManager.Show($"Increment of item {selectedItem.Name}cannot be done", "Insufficient units in stock");
+                }
             }
         }
+
         /// <summary>
         /// Decrement the quantity of an item in the cart
         /// </summary>
@@ -146,15 +141,25 @@ namespace Tienda_Electronica
             if (selectedItem is not null)
             {
                 selectedItem.Quantity--;
-                var obj = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
-                _Cart[obj] = selectedItem.Quantity;
+                var product = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
+                _Cart[product] = selectedItem.Quantity;
                 if (selectedItem.Quantity <= 0)
                 {
                     _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i));
                 }
+                //Because we give back one item of cart, we need to sync with the repository of products
+                Product p = _productRepository.Get(product.Id).SingleOrDefault();
+
+                if (p is not null)
+                {
+                    p.Stock++;
+                    _productRepository.Update(p);
+                }
+
                 LoadCart();
             }
         }
+
         /// <summary>
         /// SELL
         /// Permforms the sell to the client
@@ -176,10 +181,11 @@ namespace Tienda_Electronica
             //We generate the new bill and we clear the cart.
             //In the client form, we get the info of the client 
             //And that info will be automatic stored in the bill client prop
-            _AccRepository.Add(bill);
+            _accRepository.Add(bill);
             _Cart.Clear();
             Close();
         }
+
         /// <summary>
         /// Calculates the total cost per item in the cart
         /// </summary>
@@ -191,11 +197,6 @@ namespace Tienda_Electronica
                 return i.Key.Price * i.Value;
             });
         }
-
-        #region Preventing User UI problems
-
-        #endregion
-
         private void sfBtnCancel_Click(object sender, EventArgs e)
         {
             Close();
