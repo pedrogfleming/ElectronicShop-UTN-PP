@@ -97,8 +97,12 @@ namespace Tienda_Electronica
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if (selectedItem is not null)
             {
-                _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i));
-                LoadCart();
+                Product? productFromCart = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
+                if (productFromCart is not null)
+                {
+                    _Cart.Remove(productFromCart);
+                    LoadCart();
+                }
             }
         }
 
@@ -113,14 +117,14 @@ namespace Tienda_Electronica
             if (selectedItem is not null)
             {
                 //Because we are adding more unit of the product, we need to verify that are products of the type in stock
-                Product p = _productRepository.Get(selectedItem.Id).SingleOrDefault();
-                if (p is not null && p.Stock > 0)
+                Product? productFromStock = _productRepository.Get(selectedItem.Id).SingleOrDefault();
+                if (productFromStock is not null && productFromStock.Stock > 0)
                 {
-                    p.Stock--;
-                    _productRepository.Update(p);
+                    productFromStock.Stock--;
+                    _productRepository.Update(productFromStock);
                     selectedItem.Quantity++;
-                    var obj = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
-                    _Cart[obj] = selectedItem.Quantity;
+                    Product? productFromCart = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
+                    if (productFromCart is not null) { _Cart[productFromCart] = selectedItem.Quantity; }
                     LoadCart();
                 }
                 else
@@ -141,19 +145,17 @@ namespace Tienda_Electronica
             if (selectedItem is not null)
             {
                 selectedItem.Quantity--;
-                var product = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
-                _Cart[product] = selectedItem.Quantity;
-                if (selectedItem.Quantity <= 0)
-                {
-                    _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i));
-                }
-                //Because we give back one item of cart, we need to sync with the repository of products
-                Product p = _productRepository.Get(product.Id).SingleOrDefault();
+                Product? productFromCart = _Cart.Keys.SingleOrDefault(i => selectedItem == i);
+                if (productFromCart is not null) { _Cart[productFromCart] = selectedItem.Quantity; }
+                if (selectedItem.Quantity <= 0) { _Cart.Remove(_Cart.Keys.SingleOrDefault(i => selectedItem == i)); }
 
-                if (p is not null)
+                //Because we give back one item of cart, we need to sync with the repository of products
+                Product? productInStock = _productRepository.Get(productFromCart.Id).SingleOrDefault();
+
+                if (productInStock is not null)
                 {
-                    p.Stock++;
-                    _productRepository.Update(p);
+                    productInStock.Stock++;
+                    _productRepository.Update(productInStock);
                 }
 
                 LoadCart();
