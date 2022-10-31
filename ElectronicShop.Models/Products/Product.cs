@@ -15,6 +15,7 @@ namespace ElectronicShop.Models.Products
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public int Stock { get; set; } = 0;
         public List<Tag> Tags { get; set; }
         public BarcodeGenerator BarcodeGenerator { get; set; } 
 

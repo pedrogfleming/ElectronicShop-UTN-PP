@@ -2,13 +2,18 @@
 using ElectronicShop.Models.Products;
 using ElectronicShop.Models.Users;
 using ElectronicShop.Persistence;
+using MapperConfigurations;
 using Syncfusion.Data;
+using Syncfusion.Data.Extensions;
+using Syncfusion.DataSource.Extensions;
 using Syncfusion.WinForms.Controls;
 using Syncfusion.WinForms.DataGrid.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Tienda_Electronica.GeneralView;
+using Tienda_Electronica.SalesViews;
 
 namespace Tienda_Electronica
 {
@@ -63,6 +68,8 @@ namespace Tienda_Electronica
         /// <param name="products"></param>
         private void FillDgvProducts(List<Product> products)
         {
+            SetVisibilityDetailsDgv(false);
+            aLbMainDgv.Text = "Catalog of products";
             SfDgvProducts.DataSource = null;
             SfDgvProducts.DataSource = products;
             SfDgvProducts.ContextMenuStrip.Items.Clear();
@@ -73,6 +80,7 @@ namespace Tienda_Electronica
         }
         private void FillDgvSales(List<Bill> sales)
         {
+            aLbMainDgv.Text = "Sales history";
             SfDgvProducts.DataSource = null;
             SfDgvProducts.DataSource = BillView.MapSales(sales);
             SfDgvProducts.ContextMenuStrip.Items.Clear();
@@ -80,6 +88,11 @@ namespace Tienda_Electronica
             SfDgvProducts.AllowDeleting = false;
             SfDgvProducts.AllowEditing = false;
             _View = EDgvView.Sales;
+        }
+        private void SetVisibilityDetailsDgv(bool visible)
+        {
+            sfDgvSellDetails.DataSource = visible;
+            sfDgvSellDetails.Visible = visible;
         }
         private void SetSaleMenu(bool access)
         {
@@ -90,6 +103,11 @@ namespace Tienda_Electronica
                     item.Enabled = access;
                 }
             }
+        }
+        private void RefreshCartCount()
+        {
+            int totalItemInCart = _Cart.Values.Sum();
+            cart0ToolStripMenuItem.Text = $"Cart({totalItemInCart})";
         }
 
         /// <summary>
@@ -111,6 +129,7 @@ namespace Tienda_Electronica
                 {
                     _Cart.Add(selectedProduct, 1);
                 }
+                RefreshCartCount();
                 SetSaleMenu(true);
             }
         }
@@ -212,18 +231,48 @@ namespace Tienda_Electronica
             {
                 var cartForm = new CartForm(_Cart, _accountingRepository);
                 cartForm.ShowDialog();
+                RefreshCartCount();
             }
         }
 
+        /// <summary>
+        /// Show the sales history
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void salesHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Role == ERoles.Owner)
             {
                 FillDgvSales(_accountingRepository.Get());
+                SetVisibilityDetailsDgv(true);
             }
             else
             {
                 NotificationManager.Show("Permission denied");
+            }
+        }
+        /// <summary>
+        /// When we are lookin the sale history, 
+        /// this event populate the sfDgvSaleItemOrders with all
+        /// the products selled to the customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SfDgvProducts_CellClick(object sender, Syncfusion.WinForms.DataGrid.Events.CellClickEventArgs e)
+        {
+            if(_View == EDgvView.Sales)
+            {
+                var selectedBill = e.DataRow.RowData as BillView;
+                if (selectedBill is not null)
+                {
+                    Bill b = _accountingRepository.Get(selectedBill.BillId).FirstOrDefault();
+                        
+                    List<ItemOrderDetails> selledProducts = ItemOrderDetails.MapItemOrders_To_ItemOrderDetails(
+                        b.ItemOrders, _productRepository.Get());
+                    sfDgvSellDetails.DataSource = null;
+                    sfDgvSellDetails.DataSource = selledProducts;
+                }
             }
         }
     }

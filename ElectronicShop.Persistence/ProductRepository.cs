@@ -22,6 +22,7 @@ namespace ElectronicShop.Persistence
                     BarcodeGenerator = new BarcodeGenerator(EncodeTypes.Code128),
                     Price = (decimal)(new Random().Next(50,1000) + new Random().NextDouble()),
                     Description = "Good quality and long live mouse",
+                    Stock = 15,
                     Tags = new()
                     {
                         new Tag()
@@ -47,6 +48,7 @@ namespace ElectronicShop.Persistence
                     Name = "Monitor",
                     Price = (decimal)(new Random().Next(50,1000) + new Random().NextDouble()),
                     Description = "Good quality Monitor for Netflix series",
+                    Stock = 3,
                     Tags = new()
                     {
                         new Tag()

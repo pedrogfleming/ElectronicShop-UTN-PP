@@ -34,10 +34,14 @@
             this.sellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sellProductsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SfDgvProducts = new Syncfusion.WinForms.DataGrid.SfDataGrid();
             this.cart0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SfDgvProducts = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            this.sfDgvSellDetails = new Syncfusion.WinForms.DataGrid.SfDataGrid();
+            this.albSaleItemOrders = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.aLbMainDgv = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.mnsOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SfDgvProducts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sfDgvSellDetails)).BeginInit();
             this.SuspendLayout();
             // 
             // mnsOptions
@@ -51,7 +55,7 @@
             this.mnsOptions.Location = new System.Drawing.Point(2, 2);
             this.mnsOptions.Name = "mnsOptions";
             this.mnsOptions.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.mnsOptions.Size = new System.Drawing.Size(185, 921);
+            this.mnsOptions.Size = new System.Drawing.Size(108, 1057);
             this.mnsOptions.TabIndex = 0;
             this.mnsOptions.Text = "menuStrip1";
             // 
@@ -60,13 +64,13 @@
             this.inventoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewToolStripMenuItem});
             this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
-            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(174, 29);
+            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.inventoryToolStripMenuItem.Text = "Inventory";
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(151, 34);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
@@ -76,13 +80,13 @@
             this.sellProductsToolStripMenuItem,
             this.salesHistoryToolStripMenuItem});
             this.sellToolStripMenuItem.Name = "sellToolStripMenuItem";
-            this.sellToolStripMenuItem.Size = new System.Drawing.Size(174, 29);
+            this.sellToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.sellToolStripMenuItem.Text = "Sell";
             // 
             // sellProductsToolStripMenuItem
             // 
             this.sellProductsToolStripMenuItem.Name = "sellProductsToolStripMenuItem";
-            this.sellProductsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.sellProductsToolStripMenuItem.Size = new System.Drawing.Size(217, 34);
             this.sellProductsToolStripMenuItem.Tag = "Sell";
             this.sellProductsToolStripMenuItem.Text = "Sell products";
             this.sellProductsToolStripMenuItem.Click += new System.EventHandler(this.sellProductsToolStripMenuItem_Click);
@@ -90,21 +94,28 @@
             // salesHistoryToolStripMenuItem
             // 
             this.salesHistoryToolStripMenuItem.Name = "salesHistoryToolStripMenuItem";
-            this.salesHistoryToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.salesHistoryToolStripMenuItem.Size = new System.Drawing.Size(217, 34);
             this.salesHistoryToolStripMenuItem.Tag = "History";
             this.salesHistoryToolStripMenuItem.Text = "Sales history";
             this.salesHistoryToolStripMenuItem.Click += new System.EventHandler(this.salesHistoryToolStripMenuItem_Click);
+            // 
+            // cart0ToolStripMenuItem
+            // 
+            this.cart0ToolStripMenuItem.Enabled = false;
+            this.cart0ToolStripMenuItem.Name = "cart0ToolStripMenuItem";
+            this.cart0ToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
+            this.cart0ToolStripMenuItem.Text = "Cart(0)";
             // 
             // SfDgvProducts
             // 
             this.SfDgvProducts.AccessibleName = "Table";
             this.SfDgvProducts.AllowResizingColumns = true;
             this.SfDgvProducts.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.Fill;
-            this.SfDgvProducts.Location = new System.Drawing.Point(116, 10);
+            this.SfDgvProducts.Location = new System.Drawing.Point(116, 88);
             this.SfDgvProducts.Margin = new System.Windows.Forms.Padding(2);
             this.SfDgvProducts.Name = "SfDgvProducts";
             this.SfDgvProducts.PreviewRowHeight = 49;
-            this.SfDgvProducts.Size = new System.Drawing.Size(1158, 634);
+            this.SfDgvProducts.Size = new System.Drawing.Size(1265, 541);
             this.SfDgvProducts.Style.Border3DStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.SfDgvProducts.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.SfDgvProducts.Style.CellStyle.BackColor = System.Drawing.Color.Plum;
@@ -114,22 +125,55 @@
             this.SfDgvProducts.Style.HyperlinkStyle.DefaultLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.SfDgvProducts.TabIndex = 1;
             this.SfDgvProducts.Text = "sfDataGrid1";
+            this.SfDgvProducts.CellClick += new Syncfusion.WinForms.DataGrid.Events.CellClickEventHandler(this.SfDgvProducts_CellClick);
             this.SfDgvProducts.CurrentCellEndEdit += new Syncfusion.WinForms.DataGrid.Events.CurrentCellEndEditEventHandler(this.SfDgvProducts_CurrentCellEndEdit);
             this.SfDgvProducts.RowValidating += new Syncfusion.WinForms.DataGrid.Events.RowValidatingEventHandler(this.SfDgvProducts_RowValidating);
             this.SfDgvProducts.AddNewRowInitiating += new Syncfusion.WinForms.DataGrid.Events.AddNewRowInitiatingEventHandler(this.SfDgvProducts_AddNewRowInitiating);
             this.SfDgvProducts.CurrentCellKeyDown += new Syncfusion.WinForms.DataGrid.Events.CurrentCellKeyEventHandler(this.SfDgvProducts_CurrentCellKeyDown);
             // 
-            // cart0ToolStripMenuItem
+            // sfDgvSellDetails
             // 
-            this.cart0ToolStripMenuItem.Name = "cart0ToolStripMenuItem";
-            this.cart0ToolStripMenuItem.Size = new System.Drawing.Size(174, 29);
-            this.cart0ToolStripMenuItem.Text = "Cart(0)";
+            this.sfDgvSellDetails.AccessibleName = "Table";
+            this.sfDgvSellDetails.Enabled = false;
+            this.sfDgvSellDetails.Location = new System.Drawing.Point(116, 681);
+            this.sfDgvSellDetails.Name = "sfDgvSellDetails";
+            this.sfDgvSellDetails.PasteOption = Syncfusion.WinForms.DataGrid.Enums.PasteOptions.None;
+            this.sfDgvSellDetails.PreviewRowHeight = 42;
+            this.sfDgvSellDetails.Size = new System.Drawing.Size(1265, 293);
+            this.sfDgvSellDetails.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.sfDgvSellDetails.Style.CheckBoxStyle.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.sfDgvSellDetails.Style.CheckBoxStyle.CheckedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.sfDgvSellDetails.Style.CheckBoxStyle.IndeterminateBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.sfDgvSellDetails.Style.HyperlinkStyle.DefaultLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.sfDgvSellDetails.TabIndex = 2;
+            this.sfDgvSellDetails.Text = "sfDataGrid1";
+            this.sfDgvSellDetails.Visible = false;
+            // 
+            // albSaleItemOrders
+            // 
+            this.albSaleItemOrders.Location = new System.Drawing.Point(116, 640);
+            this.albSaleItemOrders.Name = "albSaleItemOrders";
+            this.albSaleItemOrders.Size = new System.Drawing.Size(112, 25);
+            this.albSaleItemOrders.TabIndex = 3;
+            this.albSaleItemOrders.Text = "Items orders";
+            this.albSaleItemOrders.Visible = false;
+            // 
+            // aLbMainDgv
+            // 
+            this.aLbMainDgv.Location = new System.Drawing.Point(116, 34);
+            this.aLbMainDgv.Name = "aLbMainDgv";
+            this.aLbMainDgv.Size = new System.Drawing.Size(56, 25);
+            this.aLbMainDgv.TabIndex = 4;
+            this.aLbMainDgv.Text = "Items";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1379, 925);
+            this.ClientSize = new System.Drawing.Size(1427, 1061);
+            this.Controls.Add(this.aLbMainDgv);
+            this.Controls.Add(this.albSaleItemOrders);
+            this.Controls.Add(this.sfDgvSellDetails);
             this.Controls.Add(this.SfDgvProducts);
             this.Controls.Add(this.mnsOptions);
             this.MainMenuStrip = this.mnsOptions;
@@ -141,6 +185,7 @@
             this.mnsOptions.ResumeLayout(false);
             this.mnsOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SfDgvProducts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sfDgvSellDetails)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,5 +201,8 @@
         private System.Windows.Forms.ToolStripMenuItem salesHistoryToolStripMenuItem;
         private Syncfusion.WinForms.DataGrid.SfDataGrid SfDgvProducts;
         private System.Windows.Forms.ToolStripMenuItem cart0ToolStripMenuItem;
+        private Syncfusion.WinForms.DataGrid.SfDataGrid sfDgvSellDetails;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel albSaleItemOrders;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel aLbMainDgv;
     }
 }

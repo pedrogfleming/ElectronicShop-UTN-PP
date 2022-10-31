@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ElectronicShop.Models\ElectronicShop.Models.csproj" />
     <ProjectReference Include="..\ElectronicShop.Persistence\ElectronicShop.Persistence.csproj" />
+    <ProjectReference Include="..\MapperConfigurations\ElectronicShop.MapperConfigurations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

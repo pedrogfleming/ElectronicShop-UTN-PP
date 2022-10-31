@@ -1,6 +1,7 @@
 ﻿using ElectronicShop.Models.Accounting;
 using ElectronicShop.Models.Products;
 using ElectronicShop.Persistence;
+using MapperConfigurations;
 using Syncfusion.Data.Extensions;
 using Syncfusion.XlsIO;
 using Syncfusion.XPS;
@@ -119,12 +120,12 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void sfBtnSell_Click(object sender, EventArgs e)
         {
-            var bill = new Bill()
-            {
-                DateOfSale = DateTime.Now,
-                TotalAmount = CalculateTotalCartCost(),
-                Client = new()
-            };
+            var bill = new Bill(
+                new(),
+                DateTime.Now,
+                CalculateTotalCartCost(),
+                BillMapper.MapCartProducts_To_ItemOrders(_Cart)
+            );
 
             var cForm = new ClientForm(bill);
             cForm.Show();

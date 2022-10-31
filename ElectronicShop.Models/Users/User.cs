@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicShop.Models.Users
 {
-    public abstract class User
+    public class User
     {
         public Guid Id { get; set; }
         

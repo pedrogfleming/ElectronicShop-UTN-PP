@@ -6,24 +6,29 @@ namespace ElectronicShop.Models.Users.Validator
 {
     public static class UserValidator
     {
+        /// <summary>
+        /// A dictionary matching the users with their role
+        /// </summary>
         private static Dictionary<User,ERoles> Users { get; }
-
+        /// <summary>
+        /// We populate our users and their roles
+        /// </summary>
         static UserValidator()
         {
-            Owner o = new();
-            Seller s = new();
-            o.DNI = "26489798";
-            o.Name = "Oscar Lopez";
-            o.Email = "oscar_lopez@gmail.com";
-            o.Password = "123456";
+            User owner = new();
+            User seller = new();
+            owner.DNI = "26489798";
+            owner.Name = "Oscar Lopez";
+            owner.Email = "oscar_lopez@gmail.com";
+            owner.Password = "123456";
 
-            s.DNI = "31949721";
-            s.Name = "Fabian Lopez";
-            s.Email = "fabian_lopez@gmail.com";
-            s.Password = "123456";
+            seller.DNI = "31949721";
+            seller.Name = "Fabian Lopez";
+            seller.Email = "fabian_lopez@gmail.com";
+            seller.Password = "123456";
             Users = new();
-            Users.Add(o,ERoles.Owner);
-            Users.Add(s,ERoles.Seller);
+            Users.Add(owner,ERoles.Owner);
+            Users.Add(seller,ERoles.Seller);
         }
         /// <summary>
         /// Authenticates an user from an email and password provided
