@@ -55,7 +55,7 @@
             this.mnsOptions.Location = new System.Drawing.Point(2, 2);
             this.mnsOptions.Name = "mnsOptions";
             this.mnsOptions.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.mnsOptions.Size = new System.Drawing.Size(108, 1057);
+            this.mnsOptions.Size = new System.Drawing.Size(108, 1091);
             this.mnsOptions.TabIndex = 0;
             this.mnsOptions.Text = "menuStrip1";
             // 
@@ -70,7 +70,7 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(151, 34);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
@@ -162,15 +162,15 @@
             // 
             this.aLbMainDgv.Location = new System.Drawing.Point(116, 34);
             this.aLbMainDgv.Name = "aLbMainDgv";
-            this.aLbMainDgv.Size = new System.Drawing.Size(56, 25);
+            this.aLbMainDgv.Size = new System.Drawing.Size(285, 25);
             this.aLbMainDgv.TabIndex = 4;
-            this.aLbMainDgv.Text = "Items";
+            this.aLbMainDgv.Text = "Click on an option in the left menu";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1427, 1061);
+            this.ClientSize = new System.Drawing.Size(1439, 1095);
             this.Controls.Add(this.aLbMainDgv);
             this.Controls.Add(this.albSaleItemOrders);
             this.Controls.Add(this.sfDgvSellDetails);

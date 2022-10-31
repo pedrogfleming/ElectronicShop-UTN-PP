@@ -121,16 +121,26 @@ namespace Tienda_Electronica
             Product selectedProduct = SfDgvProducts.SelectedItem as Product;
             if (selectedProduct is not null)
             {
-                if (_Cart.ContainsKey(selectedProduct))
+                if(selectedProduct.Stock > 0)
                 {
-                    _Cart[selectedProduct]++;
+                    if (_Cart.ContainsKey(selectedProduct))
+                    {
+                        _Cart[selectedProduct]++;
+                    }
+                    else
+                    {
+                        _Cart.Add(selectedProduct, 1);
+                    }
+                    selectedProduct.Stock--;
+                    _productRepository.Update(selectedProduct);
+                    FillDgvProducts(_productRepository.Get());
+                    RefreshCartCount();
+                    SetSaleMenu(true);
                 }
                 else
                 {
-                    _Cart.Add(selectedProduct, 1);
+                    NotificationManager.Show("Unable to add to the cart",$"Insufficient stock of {selectedProduct.Name}");
                 }
-                RefreshCartCount();
-                SetSaleMenu(true);
             }
         }
 
@@ -253,7 +263,7 @@ namespace Tienda_Electronica
             }
         }
         /// <summary>
-        /// When we are lookin the sale history, 
+        /// When we are looking the sale history, 
         /// this event populate the sfDgvSaleItemOrders with all
         /// the products selled to the customer
         /// </summary>

@@ -25,6 +25,7 @@ namespace Tienda_Electronica
         private Dictionary<Product,int> _Cart { get; init; }
         private AccountingRepository _AccRepository { get; init; }
         private bool UserSelectedItem { get; set; } = false;
+        private ItemCart _selectedProduct { get; set; }
         public CartForm()
         {
             InitializeComponent();
@@ -41,8 +42,12 @@ namespace Tienda_Electronica
         /// </summary>
         private void LoadCart()
         {
-            sfLvwCart.DataSource = null;
             CleanItemWithZeroQty();
+            if(_Cart.Count == 0 )
+            {
+                Close();
+            }
+            sfLvwCart.DataSource = null;
             sfLvwCart.DataSource = _Cart.Select(p =>
                 new ItemCart(
                     p.Key.Id.Value,
@@ -54,6 +59,14 @@ namespace Tienda_Electronica
 
         }
         /// <summary>
+        /// When there isn´t a selected item in the lstbox, the first is selected
+        /// </summary>
+        private void SelectDefaultItem()
+        {
+            if (sfLvwCart.SelectedItem is null && _selectedProduct is null)
+            {
+                sfLvwCart.SelectedIndex = 0;
+            }
             else
             {
                 sfLvwCart.SelectedIndex = _Cart.Keys.IndexOf(sfLvwCart)
@@ -86,6 +99,7 @@ namespace Tienda_Electronica
             if (_Cart.Count != 0)
             {
                 sfLvwCart.ContextMenuStrip.Items.Add("Remove", null, RemoveFromCart);
+
             }
         }
 
@@ -97,6 +111,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void nudQuantityItems_ValueChanged(object sender, EventArgs e)
         {
+            SelectDefaultItem();
             var selectedItem = sfLvwCart.SelectedItem as ItemCart;
             if (selectedItem is not null)
             {
@@ -106,7 +121,16 @@ namespace Tienda_Electronica
                 LoadCart();
             }
         }
-
+        private void EditQuantityItem(object sender, EventArgs e)
+        {
+            var selectedItem = sfLvwCart.SelectedItem as ItemCart;
+            if (selectedItem is not null)
+            {
+                _selectedProduct = selectedItem;
+                nudQuantityItems.Value = _selectedProduct.Quantity;
+                LoadCart();
+            }
+        }
         /// <summary>
         /// DELETE
         /// Remove the selected item from the cart listview
@@ -168,10 +192,7 @@ namespace Tienda_Electronica
         /// <param name="e"></param>
         private void sfLvwCart_MouseEnter(object sender, EventArgs e)
         {
-            if(sfLvwCart.SelectedItem is null)
-            {
-                sfLvwCart.SelectedIndex = 0;
-            }
+            SelectDefaultItem();
             nudQuantityItems.Visible = true;
         }
         /// <summary>
@@ -201,6 +222,26 @@ namespace Tienda_Electronica
                 albQuantity.Visible = nudQuantityItems.Visible;
             }            
         }
+        /// <summary>
+        /// To prevent changing the value of the nud without changing the quantity of an item not selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nudQuantityItems_MouseClick(object sender, MouseEventArgs e)
+        {
+            SelectDefaultItem();
+        }
+        /// <summary>
+        /// To prevent changing the value of the nud without changing the quantity of an item not selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nudQuantityItems_MouseDown(object sender, MouseEventArgs e)
+        {
+            SelectDefaultItem();
+        }
+
         #endregion
+
     }
 }

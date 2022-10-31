@@ -38,11 +38,10 @@
             // sfLvwCart
             // 
             this.sfLvwCart.AccessibleName = "ScrollControl";
-            this.sfLvwCart.Location = new System.Drawing.Point(11, 11);
-            this.sfLvwCart.Margin = new System.Windows.Forms.Padding(2);
+            this.sfLvwCart.Location = new System.Drawing.Point(16, 18);
             this.sfLvwCart.Name = "sfLvwCart";
-            this.sfLvwCart.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.sfLvwCart.Size = new System.Drawing.Size(436, 240);
+            this.sfLvwCart.Padding = new System.Windows.Forms.Padding(9, 0, 0, 0);
+            this.sfLvwCart.Size = new System.Drawing.Size(622, 399);
             this.sfLvwCart.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.sfLvwCart.TabIndex = 0;
             this.sfLvwCart.SelectionChanged += new System.EventHandler<Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs>(this.sfLvwCart_SelectionChanged);
@@ -50,20 +49,22 @@
             // 
             // nudQuantityItems
             // 
-            this.nudQuantityItems.Location = new System.Drawing.Point(474, 40);
-            this.nudQuantityItems.Margin = new System.Windows.Forms.Padding(2);
+            this.nudQuantityItems.Location = new System.Drawing.Point(677, 67);
             this.nudQuantityItems.Name = "nudQuantityItems";
-            this.nudQuantityItems.Size = new System.Drawing.Size(75, 23);
+            this.nudQuantityItems.Size = new System.Drawing.Size(107, 31);
             this.nudQuantityItems.TabIndex = 1;
             this.nudQuantityItems.Visible = false;
             this.nudQuantityItems.ValueChanged += new System.EventHandler(this.nudQuantityItems_ValueChanged);
             this.nudQuantityItems.VisibleChanged += new System.EventHandler(this.nudQuantityItems_VisibleChanged);
+            this.nudQuantityItems.MouseClick += new System.Windows.Forms.MouseEventHandler(this.nudQuantityItems_MouseClick);
+            this.nudQuantityItems.MouseDown += new System.Windows.Forms.MouseEventHandler(this.nudQuantityItems_MouseDown);
             // 
             // albQuantity
             // 
-            this.albQuantity.Location = new System.Drawing.Point(474, 11);
+            this.albQuantity.Location = new System.Drawing.Point(677, 18);
+            this.albQuantity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.albQuantity.Name = "albQuantity";
-            this.albQuantity.Size = new System.Drawing.Size(53, 15);
+            this.albQuantity.Size = new System.Drawing.Size(80, 25);
             this.albQuantity.TabIndex = 2;
             this.albQuantity.Text = "Quantity";
             this.albQuantity.Visible = false;
@@ -72,9 +73,10 @@
             // 
             this.sfBtnSell.AccessibleName = "Button";
             this.sfBtnSell.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.sfBtnSell.Location = new System.Drawing.Point(452, 223);
+            this.sfBtnSell.Location = new System.Drawing.Point(646, 372);
+            this.sfBtnSell.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.sfBtnSell.Name = "sfBtnSell";
-            this.sfBtnSell.Size = new System.Drawing.Size(96, 28);
+            this.sfBtnSell.Size = new System.Drawing.Size(137, 47);
             this.sfBtnSell.TabIndex = 3;
             this.sfBtnSell.Text = "Sell";
             this.sfBtnSell.UseVisualStyleBackColor = true;
@@ -82,14 +84,13 @@
             // 
             // CartForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 270);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.sfBtnSell);
             this.Controls.Add(this.albQuantity);
             this.Controls.Add(this.nudQuantityItems);
             this.Controls.Add(this.sfLvwCart);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CartForm";
             this.Text = "Cart";
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantityItems)).EndInit();
