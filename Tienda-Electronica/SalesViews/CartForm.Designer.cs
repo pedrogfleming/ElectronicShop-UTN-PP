@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.sfLvwCart = new Syncfusion.WinForms.ListView.SfListView();
-            this.nudQuantityItems = new System.Windows.Forms.NumericUpDown();
-            this.albQuantity = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.sfBtnSell = new Syncfusion.WinForms.Controls.SfButton();
-            ((System.ComponentModel.ISupportInitialize)(this.nudQuantityItems)).BeginInit();
+            this.sfBtnCancel = new Syncfusion.WinForms.Controls.SfButton();
+            this.SfCTxtTotalAmount = new Syncfusion.Windows.Forms.Tools.CurrencyTextBox();
+            this.albTotalCartAmount = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.SfCTxtTotalAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // sfLvwCart
@@ -44,56 +46,69 @@
             this.sfLvwCart.Size = new System.Drawing.Size(622, 399);
             this.sfLvwCart.Style.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.sfLvwCart.TabIndex = 0;
-            this.sfLvwCart.SelectionChanged += new System.EventHandler<Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs>(this.sfLvwCart_SelectionChanged);
-            this.sfLvwCart.MouseEnter += new System.EventHandler(this.sfLvwCart_MouseEnter);
-            // 
-            // nudQuantityItems
-            // 
-            this.nudQuantityItems.Location = new System.Drawing.Point(677, 67);
-            this.nudQuantityItems.Name = "nudQuantityItems";
-            this.nudQuantityItems.Size = new System.Drawing.Size(107, 31);
-            this.nudQuantityItems.TabIndex = 1;
-            this.nudQuantityItems.Visible = false;
-            this.nudQuantityItems.ValueChanged += new System.EventHandler(this.nudQuantityItems_ValueChanged);
-            this.nudQuantityItems.VisibleChanged += new System.EventHandler(this.nudQuantityItems_VisibleChanged);
-            this.nudQuantityItems.MouseClick += new System.Windows.Forms.MouseEventHandler(this.nudQuantityItems_MouseClick);
-            this.nudQuantityItems.MouseDown += new System.Windows.Forms.MouseEventHandler(this.nudQuantityItems_MouseDown);
-            // 
-            // albQuantity
-            // 
-            this.albQuantity.Location = new System.Drawing.Point(677, 18);
-            this.albQuantity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.albQuantity.Name = "albQuantity";
-            this.albQuantity.Size = new System.Drawing.Size(80, 25);
-            this.albQuantity.TabIndex = 2;
-            this.albQuantity.Text = "Quantity";
-            this.albQuantity.Visible = false;
             // 
             // sfBtnSell
             // 
             this.sfBtnSell.AccessibleName = "Button";
             this.sfBtnSell.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.sfBtnSell.Location = new System.Drawing.Point(646, 372);
+            this.sfBtnSell.Location = new System.Drawing.Point(645, 18);
             this.sfBtnSell.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.sfBtnSell.Name = "sfBtnSell";
-            this.sfBtnSell.Size = new System.Drawing.Size(137, 47);
+            this.sfBtnSell.Size = new System.Drawing.Size(137, 184);
             this.sfBtnSell.TabIndex = 3;
             this.sfBtnSell.Text = "Sell";
             this.sfBtnSell.UseVisualStyleBackColor = true;
             this.sfBtnSell.Click += new System.EventHandler(this.sfBtnSell_Click);
             // 
+            // sfBtnCancel
+            // 
+            this.sfBtnCancel.AccessibleName = "Button";
+            this.sfBtnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.sfBtnCancel.Location = new System.Drawing.Point(645, 212);
+            this.sfBtnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sfBtnCancel.Name = "sfBtnCancel";
+            this.sfBtnCancel.Size = new System.Drawing.Size(137, 205);
+            this.sfBtnCancel.TabIndex = 4;
+            this.sfBtnCancel.Text = "Cancel";
+            this.sfBtnCancel.UseVisualStyleBackColor = true;
+            this.sfBtnCancel.Click += new System.EventHandler(this.sfBtnCancel_Click);
+            // 
+            // SfCTxtTotalAmount
+            // 
+            this.SfCTxtTotalAmount.BeforeTouchSize = new System.Drawing.Size(150, 31);
+            this.SfCTxtTotalAmount.CurrencySymbol = "$";
+            this.SfCTxtTotalAmount.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            131072});
+            this.SfCTxtTotalAmount.Location = new System.Drawing.Point(488, 433);
+            this.SfCTxtTotalAmount.Name = "SfCTxtTotalAmount";
+            this.SfCTxtTotalAmount.Size = new System.Drawing.Size(150, 31);
+            this.SfCTxtTotalAmount.TabIndex = 5;
+            this.SfCTxtTotalAmount.Text = "0,00 $";
+            // 
+            // albTotalCartAmount
+            // 
+            this.albTotalCartAmount.Location = new System.Drawing.Point(321, 436);
+            this.albTotalCartAmount.Name = "albTotalCartAmount";
+            this.albTotalCartAmount.Size = new System.Drawing.Size(150, 25);
+            this.albTotalCartAmount.TabIndex = 6;
+            this.albTotalCartAmount.Text = "Total cart amount";
+            // 
             // CartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(790, 476);
+            this.Controls.Add(this.albTotalCartAmount);
+            this.Controls.Add(this.SfCTxtTotalAmount);
+            this.Controls.Add(this.sfBtnCancel);
             this.Controls.Add(this.sfBtnSell);
-            this.Controls.Add(this.albQuantity);
-            this.Controls.Add(this.nudQuantityItems);
             this.Controls.Add(this.sfLvwCart);
             this.Name = "CartForm";
             this.Text = "Cart";
-            ((System.ComponentModel.ISupportInitialize)(this.nudQuantityItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SfCTxtTotalAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,8 +117,9 @@
         #endregion
 
         private Syncfusion.WinForms.ListView.SfListView sfLvwCart;
-        private System.Windows.Forms.NumericUpDown nudQuantityItems;
-        private Syncfusion.Windows.Forms.Tools.AutoLabel albQuantity;
         private Syncfusion.WinForms.Controls.SfButton sfBtnSell;
+        private Syncfusion.WinForms.Controls.SfButton sfBtnCancel;
+        private Syncfusion.Windows.Forms.Tools.CurrencyTextBox SfCTxtTotalAmount;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel albTotalCartAmount;
     }
 }

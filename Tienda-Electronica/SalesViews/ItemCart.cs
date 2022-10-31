@@ -1,6 +1,7 @@
 ﻿using ElectronicShop.Models.Products;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,16 @@ namespace Tienda_Electronica.SalesViews
             Quantity = quantity;
         }
 
+        public ItemCart(Product p,int? quantity = null)
+        {
+            Id = p.Id.Value;
+            Name = p.Name;
+            Price = p.Price;
+            if(quantity is not null)
+            {
+                Quantity = quantity.Value;
+            }
+        }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
