@@ -60,6 +60,7 @@ namespace Tienda_Electronica
                 SfDgvProducts.AllowEditing = true;
                 SfDgvProducts.LiveDataUpdateMode = LiveDataUpdateMode.AllowSummaryUpdate;
                 SfDgvProducts.AddNewRowPosition = RowPosition.Bottom;
+                //SfDgvProducts.ContextMenuStrip.Items.Add("Modify", null, ModifyProduct);
             }
         }
         /// <summary>
@@ -73,7 +74,7 @@ namespace Tienda_Electronica
             SfDgvProducts.DataSource = null;
             SfDgvProducts.DataSource = products;
             SfDgvProducts.ContextMenuStrip.Items.Clear();
-            SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);
+            SfDgvProducts.ContextMenuStrip.Items.Add("Add to Cart", null, AddToCart);            
             SetPermissions(Role);
             _View = EDgvView.Products;
             SetSaleMenu(_Cart.Count > 0);
@@ -108,6 +109,10 @@ namespace Tienda_Electronica
         {
             int totalItemInCart = _Cart.Values.Sum();
             cart0ToolStripMenuItem.Text = $"Cart({totalItemInCart})";
+        }
+        private void ModifyProduct(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>

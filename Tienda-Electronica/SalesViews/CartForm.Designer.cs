@@ -51,7 +51,7 @@
             // 
             this.sfBtnSell.AccessibleName = "Button";
             this.sfBtnSell.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.sfBtnSell.Location = new System.Drawing.Point(645, 18);
+            this.sfBtnSell.Location = new System.Drawing.Point(677, 18);
             this.sfBtnSell.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.sfBtnSell.Name = "sfBtnSell";
             this.sfBtnSell.Size = new System.Drawing.Size(137, 184);
@@ -64,7 +64,7 @@
             // 
             this.sfBtnCancel.AccessibleName = "Button";
             this.sfBtnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.sfBtnCancel.Location = new System.Drawing.Point(645, 212);
+            this.sfBtnCancel.Location = new System.Drawing.Point(677, 212);
             this.sfBtnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.sfBtnCancel.Name = "sfBtnCancel";
             this.sfBtnCancel.Size = new System.Drawing.Size(137, 205);
@@ -82,7 +82,7 @@
             0,
             0,
             131072});
-            this.SfCTxtTotalAmount.Location = new System.Drawing.Point(488, 433);
+            this.SfCTxtTotalAmount.Location = new System.Drawing.Point(489, 450);
             this.SfCTxtTotalAmount.Name = "SfCTxtTotalAmount";
             this.SfCTxtTotalAmount.Size = new System.Drawing.Size(150, 31);
             this.SfCTxtTotalAmount.TabIndex = 5;
@@ -90,7 +90,7 @@
             // 
             // albTotalCartAmount
             // 
-            this.albTotalCartAmount.Location = new System.Drawing.Point(321, 436);
+            this.albTotalCartAmount.Location = new System.Drawing.Point(322, 453);
             this.albTotalCartAmount.Name = "albTotalCartAmount";
             this.albTotalCartAmount.Size = new System.Drawing.Size(150, 25);
             this.albTotalCartAmount.TabIndex = 6;
@@ -100,7 +100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 476);
+            this.ClientSize = new System.Drawing.Size(843, 510);
             this.Controls.Add(this.albTotalCartAmount);
             this.Controls.Add(this.SfCTxtTotalAmount);
             this.Controls.Add(this.sfBtnCancel);

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicShop.Models", "El
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicShop.Persistence", "ElectronicShop.Persistence\ElectronicShop.Persistence.csproj", "{DD7CD60F-E20C-4C37-A038-B9C676B13BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicShop.MapperConfigurations", "MapperConfigurations\ElectronicShop.MapperConfigurations.csproj", "{33A9F684-F795-4CFF-971E-996E0CCB45CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicShop.MapperConfigurations", "MapperConfigurations\ElectronicShop.MapperConfigurations.csproj", "{33A9F684-F795-4CFF-971E-996E0CCB45CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicShop.Services", "ElectronicShop.Services\ElectronicShop.Services.csproj", "{BA52203F-E667-4B78-8169-1319738F78CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{33A9F684-F795-4CFF-971E-996E0CCB45CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33A9F684-F795-4CFF-971E-996E0CCB45CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33A9F684-F795-4CFF-971E-996E0CCB45CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA52203F-E667-4B78-8169-1319738F78CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA52203F-E667-4B78-8169-1319738F78CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA52203F-E667-4B78-8169-1319738F78CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA52203F-E667-4B78-8169-1319738F78CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
